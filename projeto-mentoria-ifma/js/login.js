@@ -19,6 +19,20 @@ document.getElementById('loginForm').addEventListener('submit', async (event) =>
     const data = await response.json();
 
     if (!response.ok) {
+      // servidor respondeu com erro (5xx/4xx) — tentar fallback local antes de notificar o usuário
+      console.warn('Servidor retornou erro ao fazer login:', data);
+
+      const usersKey = 'ifma_users';
+      const users = JSON.parse(localStorage.getItem(usersKey) || '[]');
+      const found = users.find(u => u.email === email && u.senha === senha);
+
+      if (found) {
+        const usuario = { id: found.id || null, nome: found.nome, sobrenome: found.sobrenome, email: found.email, tipo: found.tipo };
+        localStorage.setItem('usuarioIFMA', JSON.stringify(usuario));
+        window.location.href = 'mentoria.html';
+        return;
+      }
+
       alert(data.erro || 'Falha ao fazer login.');
       return;
     }

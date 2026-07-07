@@ -1,0 +1,38 @@
+[
+  {
+    "mentoria": "Mentoria IFMA",
+    "descricao": "Programa de mentoria do IFMA",
+    "mentorias": [
+      {
+        "titulo": "Matemática Básica",
+        "descricao": "Revisão de álgebra, equações e funções",
+        "assuntos": ["Equações do 1º grau", "Funções", "Geometria básica"],
+        "recursos": ["apostila-matematica.pdf", "video-funcoes.mp4"]
+      },
+      {
+        "titulo": "Língua Portuguesa",
+        "descricao": "Gramática, interpretação de texto e redação",
+        "assuntos": ["Ortografia", "Interpretação de texto", "Redação"],
+        "recursos": ["exercicios-portugues.docx", "podcast-literatura.mp3"]
+      },
+      {
+        "titulo": "Química",
+        "descricao": "Tabela periódica, ligações químicas e reações",
+        "assuntos": ["Tabela periódica", "Ligações químicas", "Reações"],
+        "recursos": ["slides-quimica.pptx", "experimento-laboratorio.pdf"]
+      },
+      {
+        "titulo": "Biologia",
+        "descricao": "Genética, ecologia e evolução",
+        "assuntos": ["DNA e RNA", "Ecossistemas", "Teoria da evolução"],
+        "recursos": ["mapa-mental-biologia.png", "video-genetica.mp4"]
+      },
+      {
+        "titulo": "Inglês",
+        "descricao": "Vocabulário, gramática e conversação",
+        "assuntos": ["Vocabulário básico", "Gramática", "Conversação"],
+        "recursos": ["lista-palavras.txt", "audio-dialogo.mp3"]
+      }
+    ]
+  }
+]

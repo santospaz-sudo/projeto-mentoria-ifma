@@ -1,0 +1,660 @@
+/* ===================================================
+   ESTILO DA PÁGINA INICIAL
+   =================================================== */
+
+/* Reset básico do body: remove margem padrão do navegador,
+   define a fonte principal do site e a cor de fundo geral */
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: #f5f5f5;
+}
+
+/* ---------------------------------------------------
+   Cabeçalho (topo verde com título e subtítulo)
+   --------------------------------------------------- */
+.inicio {
+  background: linear-gradient(90deg, #006400, #008000); /* degradê verde */
+  text-align: center;   /* centraliza o texto do cabeçalho */
+  padding: 25px 20px;   /* espaçamento interno */
+  color: white;         /* cor do texto */
+  position: relative;   /* serve de referência para o menu-topo (position: absolute) */
+}
+
+/* Título principal (h1) dentro do cabeçalho */
+.inicio h1 {
+  margin: 0;
+  font-size: 2.2em;
+}
+
+/* Subtítulo abaixo do título */
+.subtitulo {
+  font-size: 1.1em;
+  margin-top: 5px;
+  opacity: 0.9; /* deixa o texto levemente transparente */
+}
+
+/* ---------------------------------------------------
+   Menu no topo (botão de menu / login / cadastro)
+   --------------------------------------------------- */
+.menu-topo {
+  position: absolute; /* posicionado em relação a .inicio */
+  top: 20px;
+  right: 20px;
+  display: flex;   /* alinha os itens do menu lado a lado */
+  gap: 15px;       /* espaço entre os itens */
+}
+
+/* Estilo compartilhado entre os botões de login e cadastro */
+.btn-login, .btn-cadastro {
+  text-decoration: none; /* remove sublinhado do link */
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-weight: bold;
+  transition: 0.3s; /* transição suave ao passar o mouse */
+}
+
+/* Botão de login (azul) */
+.btn-login {
+  background-color: #004080;
+  color: white;
+}
+
+/* Efeito hover do botão de login (fica mais escuro) */
+.btn-login:hover {
+  background-color: #003060;
+}
+
+/* Botão de cadastro (verde) */
+.btn-cadastro {
+  background-color: #008000;
+  color: white;
+}
+
+/* Efeito hover do botão de cadastro (fica mais escuro) */
+.btn-cadastro:hover {
+  background-color: #006400;
+}
+
+/* ---------------------------------------------------
+   Conteúdo principal da página (área de apresentação)
+   --------------------------------------------------- */
+
+/* Container geral que envolve a apresentação */
+.interface {
+  display: flex;
+  justify-content: flex-start; /* alinha o conteúdo à esquerda */
+  padding: 40px;
+}
+
+/* Bloco de apresentação (texto + imagem) */
+.apresentacao {
+  display: flex;
+  align-items: flex-start; /* alinha os itens pelo topo */
+  gap: 30px;                /* espaço entre texto e imagem */
+}
+
+/* Imagem/banner ilustrativo */
+.banner {
+  width: 300px;
+  border-radius: 10px;
+}
+
+/* Bloco de texto principal da apresentação */
+.texto {
+  max-width: 800px;         /* largura máxima para não ficar esticado demais */
+  margin: 40px auto;        /* centraliza o bloco horizontalmente */
+  line-height: 1.8;         /* espaçamento entre linhas para melhor leitura */
+  text-align: left;         /* alinhamento à esquerda: evita espaçamento irregular entre palavras (o "justify" causa esse problema) */
+  font-size: 18px;
+  color: #333;
+}
+
+/* Banner quando está dentro do bloco de texto:
+   fica como bloco próprio e centralizado horizontalmente */
+.texto .banner {
+  display: block;
+  margin: 20px auto; /* centraliza a imagem no meio do bloco de texto */
+}
+
+/* Título dentro do bloco de texto */
+.texto h2 {
+  text-align: left; /* título sempre centralizado */
+  color: #006400;
+  margin-bottom: 20px;
+}
+
+
+/* ===================================================
+   SIDEBAR (MENU LATERAL)
+   =================================================== */
+
+/* Sidebar fixa menor, exibida no canto inferior direito */
+aside {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 180px;
+  background-color: #e8e8e8;
+  padding: 15px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  text-align: center;
+}
+
+/* Título dentro da sidebar */
+aside h3 {
+  margin-top: 0;
+  color: #004080;
+  font-size: 1em;
+}
+
+/* Links dentro da sidebar, estilizados como botões */
+aside a {
+  display: block;
+  margin: 10px 0;
+  text-decoration: none;
+  background-color: #004080;
+  color: white;
+  padding: 8px;
+  border-radius: 5px;
+}
+
+/* Hover dos links da sidebar */
+aside a:hover {
+  background-color: #003060;
+}
+
+/* ---------------------------------------------------
+   Sidebar oculta (a que "desliza" para dentro da tela)
+   --------------------------------------------------- */
+#sidebar {
+  position: fixed;
+  bottom: 20px;
+  right: -280px; /* começa escondida fora da tela (à direita) */
+  width: 220px;
+  background-color: #e8e8e8;
+  padding: 15px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: -2px 2px 5px rgba(0,0,0,0.1);
+  transition: right 0.3s ease; /* anima a entrada/saída da sidebar */
+}
+
+/* Título dentro da sidebar oculta */
+#sidebar h3 {
+  margin-top: 0;
+  color: #004080;
+  font-size: 1em;
+}
+
+/* Links dentro da sidebar oculta, estilizados como botões */
+#sidebar a {
+  display: block;
+  margin: 8px 0;
+  text-decoration: none;
+  background-color: #004080;
+  color: white;
+  padding: 8px;
+  border-radius: 5px;
+  text-align: center;
+}
+
+/* Hover dos links da sidebar oculta */
+#sidebar a:hover {
+  background-color: #003060;
+}
+
+/* ---------------------------------------------------
+   Botão que abre o menu lateral
+   --------------------------------------------------- */
+.btn-menu {
+  background-color: #006400;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1em;
+}
+
+/* Hover do botão de menu */
+.btn-menu:hover {
+  background-color: #004d00;
+}
+
+/* Botão de fechar (X) dentro da sidebar */
+.btn-close {
+  background: none;
+  border: none;
+  font-size: 1.2em;
+  cursor: pointer;
+  float: right; /* joga o botão para o canto direito da sidebar */
+  margin-bottom: 10px;
+}
+
+/* Estado "ativo" da sidebar: quando essa classe é adicionada via JS,
+   a sidebar desliza para dentro da tela (right: 20px) */
+#sidebar.active {
+  right: 20px;
+}
+
+
+/* =====================================================
+   PÁGINA DE LOGIN
+   ===================================================== */
+
+/* Estilo geral do body na página de login:
+   usa flexbox em coluna para centralizar o conteúdo na tela */
+body {
+  font-family: Arial, sans-serif;
+  background: #f4f4f4;
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Logo fixado no canto superior esquerdo */
+.logo-ifma {
+  height: 60px;
+  width: auto;
+  padding: 5px;
+  border: none;
+  border-radius: 8px;
+  position: absolute;
+  top: 10px;
+  left: 10px;
+}
+
+/* Caixa/container do formulário de login, centralizado na tela */
+.container-login {
+  background: #fff;
+  padding: 25px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px #ccc;
+  width: 320px;
+  margin: auto; /* centraliza o container (funciona junto com o flex do body) */
+}
+
+/* Inputs e botão do formulário organizados em coluna */
+.container-login input,
+.container-login button {
+  width: 90%;
+  padding: 12px;
+  margin: 15px 0;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  display: block;
+  font-size: 16px;
+}
+
+/* Botão de login com destaque em verde */
+.container-login button {
+  color: white;
+  background: green;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+/* Hover do botão de login */
+.container-login button:hover {
+  background: #45a049;
+}
+
+/* ---------------------------------------------------
+   Campo de senha com ícone de "ver senha" ao lado
+   --------------------------------------------------- */
+.senha-container {
+  position: relative; /* referência para o ícone posicionado dentro do input */
+  width: 100%;
+  margin-top: 10px;
+}
+
+/* Rótulo (label) do campo de senha */
+.senha-container label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+/* Input de senha com espaço reservado à direita para o ícone */
+.senha-container input {
+  width: 100%;
+  padding: 12px 40px 12px 12px; /* espaço para o ícone à direita */
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+  box-sizing: border-box;
+}
+
+/* Ícone de "olho" posicionado dentro do input de senha */
+.toggle-icon {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%); /* centraliza verticalmente o ícone */
+  cursor: pointer;
+  color: #555;
+  font-size: 18px;
+}
+
+/* Hover do ícone de mostrar/ocultar senha */
+.toggle-icon:hover {
+  color: #000;
+}
+
+/* ---------------------------------------------------
+   Responsividade da página de login
+   --------------------------------------------------- */
+
+/* Ajustes para tablets (telas até 768px) */
+@media (max-width: 768px) {
+  .container-login {
+    width: 80%;
+  }
+  .logo-ifma {
+    height: 50px;
+  }
+}
+
+/* Ajustes para celulares (telas até 480px) */
+@media (max-width: 480px) {
+  .container-login {
+    width: 95%;
+    padding: 15px;
+  }
+  .logo-ifma {
+    height: 40px;
+  }
+}
+
+
+/* =====================================================
+   PLATAFORMA DE MENTORIA
+   ===================================================== */
+
+/* Botões gerais de ação (verde) */
+.botoes {
+  background-color: #006400;
+  color: white;
+  padding: 10px 20px;
+  margin: 5px;
+  border: none;
+  border-radius: 5px;
+  transition: transform 0.2s, background-color 0.3s; /* anima cor e tamanho */
+}
+
+/* Hover de botão (classe com nome incompleto no original: .botes) */
+.botes:hover {
+  background-color: #228b22;
+  transform: scale(1.1); /* efeito de "crescer" ao passar o mouse */
+}
+
+/* Estilo geral da página (redefinição do body para esta seção) */
+body {
+  font-family: 'Poppis' sans-serif; /* obs: nome de fonte pode estar incorreto, verificar se é 'Poppins' */
+  background-color: #f4f4f9;
+  margin: 0;
+  padding: 0;
+  color: #333;
+}
+
+/* ---------------------------------------------------
+   Cabeçalho da plataforma de mentoria
+   --------------------------------------------------- */
+header {
+  background-color: #006400;
+  color: white;
+  padding: 18px;
+  text-align: center;
+}
+
+/* Logo dentro do cabeçalho */
+header .logo-ifma {
+  height: 60px;
+  margin-bottom: 10px;
+}
+
+/* Título dentro do cabeçalho */
+header h1 {
+  margin: 0;
+  padding: 28px;
+}
+
+/* ---------------------------------------------------
+   Campos de input e botões da plataforma
+   --------------------------------------------------- */
+
+/* Input padrão (classe .ipt) */
+.ipt {
+  border: 1px solid black;
+  border-radius: 5px;
+  font-size: 20px;
+  margin-bottom: 20px;
+  background-color: white;
+}
+
+/* Botão com destaque em degradê verde (classe .inpt) */
+.inpt {
+  background: linear-gradient(135deg, #006400, #228b22);
+  color: white;
+  font-size: 20px;
+  border: none;
+  border-radius: 6px;
+}
+
+/* Hover do botão .inpt: clareia o degradê e aumenta levemente */
+.inpt:hover {
+  background: linear-gradient(135deg, #228b22, #32cd32);
+  transform: scale(1.1);
+}
+
+/* ---------------------------------------------------
+   Área de resultado (lista de itens/matérias selecionadas)
+   --------------------------------------------------- */
+
+/* Container do resultado, oculto por padrão */
+#resultado {
+  display: none;         /* escondido até receber a classe .active */
+  flex-wrap: wrap;       /* permite quebrar linha se tiver muitos itens */
+  gap: 10px;
+  padding: 10px;
+  background-color: #006400;
+  border-radius: 10px;
+  min-height: 56px;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+/* Quando ativo (via JS), o resultado é exibido como flexbox */
+#resultado.active {
+  display: flex;
+}
+
+/* Botões dentro da área de resultado */
+#resultado button {
+  background-color: #228b22;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 18px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+/* Hover dos botões dentro do resultado */
+#resultado button:hover {
+  background-color: #2ea23b;
+}
+
+/* ---------------------------------------------------
+   Cartão/modal de notas de uma matéria
+   --------------------------------------------------- */
+
+/* Card de notas, oculto por padrão */
+.materia-notas {
+  display: none; /* escondido até receber a classe .active */
+  background-color: #ffffff;
+  border: 1px solid #c2d8c2;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  padding: 22px;
+  margin-bottom: 20px;
+  position: relative; /* referência para o botão de fechar posicionado dentro */
+}
+
+/* Quando ativo, o card de notas fica visível */
+.materia-notas.active {
+  display: block;
+}
+
+/* Botão de fechar (X) dentro do card de notas */
+.materia-notas .fechar-notas {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: #006400;
+  color: #fff;
+  border: none;
+  border-radius: 50%; /* deixa o botão redondo */
+  width: 32px;
+  height: 32px;
+  cursor: pointer;
+  font-size: 18px;
+  line-height: 1;
+}
+
+/* Hover do botão de fechar */
+.materia-notas .fechar-notas:hover {
+  background: #228b22;
+}
+
+/* Parágrafos dentro do card de notas */
+.materia-notas p {
+  margin: 0;
+  font-size: 16px;
+  color: #2d4d2d;
+}
+
+/* Título (h3) dentro do card de notas */
+.materia-notas h3 {
+  margin-top: 0;
+  margin-bottom: 12px;
+  color: #064f13;
+}
+
+/* Lista de notas: remove marcadores e espaçamento padrão */
+.materia-notas ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* Cada item da lista de notas */
+.materia-notas li {
+  padding: 10px 0;
+  border-bottom: 1px solid #edf5ed; /* linha divisória entre itens */
+}
+
+/* Remove a borda do último item da lista */
+.materia-notas li:last-child {
+  border-bottom: none;
+}
+
+/* Rótulo da nota (ex: "Prova 1:") */
+.materia-notas .nota-label {
+  font-weight: bold;
+  color: #2f662f;
+}
+
+/* Valor da nota, alinhado à direita do item */
+.materia-notas .nota-valor {
+  float: right;
+  color: #0d3c0d;
+}
+
+/* ---------------------------------------------------
+   Seção de introdução da plataforma
+   --------------------------------------------------- */
+.intro {
+  line-height: 1.8;
+  text-align: left;
+  padding: 30px;
+  background-color: #e9f5e9;
+  border-bottom: 2px solid #ccc; /* separa visualmente da próxima seção */
+}
+
+/* Título da seção de introdução */
+.intro h2 {
+  text-align: center;
+  color: #006400;
+  margin-bottom: 10px;
+}
+
+/* ---------------------------------------------------
+   Área de mentoria (lista de áreas/matérias disponíveis)
+   --------------------------------------------------- */
+.areas {
+  padding: 30px;
+}
+
+/* Título da seção de áreas */
+.areas h2 {
+  text-align: center;
+  color: #006400;
+  margin-bottom: 20px;
+}
+
+/* Subtítulos (h3) de cada área dentro da seção */
+.areas h3 {
+  margin-top: 25px;
+  color: #228b22;
+}
+
+/* Parágrafos dentro das áreas (obs: seletor "ares" está sem o "a" de "areas", verificar se não é erro de digitação) */
+ares p {
+  margin-bottom: 15px;
+  font-size: 15px;
+  color: #555;
+  text-align: justify;
+}
+
+/* ---------------------------------------------------
+   Botões gerais da plataforma (agrupador)
+   --------------------------------------------------- */
+.botoes {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* Botões dentro do agrupador .botoes, com degradê verde */
+.botoes button {
+  background: linear-gradient(135deg, #006400, #228b22);
+  color: white;
+  padding: 8px;
+  border: none;
+  border-radius: 6px;
+  font-size: 15px;
+  cursor: pointer;
+  transition: transform 0.2s, background 0.3s;
+}
+
+/* Hover dos botões: clareia o degradê e aumenta levemente */
+.botoes button:hover {
+  background: linear-gradient(135deg, #228b22, #32cd32);
+  transform: scale(1.1);
+}
+
+/* ---------------------------------------------------
+   Rodapé da plataforma
+   --------------------------------------------------- */
+footer {
+  background-color: #006400;
+  color: white;
+  text-align: center;
+  padding: 16px;
+  margin-top: 40px;
+}

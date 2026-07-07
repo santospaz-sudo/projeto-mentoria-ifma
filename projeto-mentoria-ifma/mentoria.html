@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PLataforma de Mentoria IFMA</title>
+    <link rel="stylesheet" href="styles.css">
+    <a id="loginForm"></a>
+</head>
+
+<body>
+    <header>
+        <img src="ifma - Copia.png" alt="logo-ifma" class="logo-ifma">
+        <h1>Plataforma de Mentoria IFMA</h1>
+    </header>
+
+    <main>
+        <section class="intro">
+            <h2>Bem-vindo!</h2>
+            <p>
+                Essa platafroma foi criada para apoiar estudantes e mentores do IFMA.
+                Aqui voçê encontra conteúdos, dicas e mentorias em diversas área do conhecimento.
+                Escolha abaixo a área que mais combina com seus objetivos e comece sua jornada!.
+            </p>
+        </section>
+
+        <section class="areas">
+            <h2>Áreas de Mentoria</h2>
+
+            <h3>Formação Geral</h3>
+            <p>Disciplinas do ensino médio e preparação para vestibulares.</p>
+            <input class="ipt" type="text" id="busca" placeholder="Buscar Mentoria...">
+            <button class="inpt">BUSCAR</button>
+            <div id="resultado" class="empty"></div>
+            <div id="materiaNotas" class="materia-notas"></div>
+            <div class="botoes">
+                <button data-mentoria="Matemática Básica">📘 Matemática</button>
+                <button data-mentoria="língua Portuguesa">📖 língua Portuguesa</button>
+                <button data-materia="Química">🧪 Química</button>
+                <button data-materia="Biolgia">🧬 Biolgia</button>
+                <button data-materia="Inglês">🌍 Inglês</button>
+                <button data-materia="Artes">🎨 Artes</button>
+                <button data-materia="Educação Física">🏃 Educação Física</button>
+                <button data-materia="Física">🔭 Física</button>
+                <button data-materia="Sociologia">📚 Sociologia</button>
+            </div>
+
+            <h3>Ensino Superior</h3>
+            <p>Mentorias voltadas para cursos técnicos e universitários.</p>
+            <div class="botoes">
+                <button data-materia="Análise e Desenvolvimento de Sistemas (ADS)">💻 Análise e Desenvolvimento de
+                    Sistemas (ADS)</button>
+                <button data-materia="Tecnologia em Processos Gerencias (TPG)">📊 Tecnologia em Processos Gerencias
+                    (TPG)</button>
+            </div>
+        </section>
+        <footer>
+            <p>&copy; 2026 Conecta IFMA - Plataforma de Mentoria</p>
+        </footer>
+    </main>
+    <script src="busca.js"></script>
+    <script src="js/grades.js" defer></script>
+</body>
+
+</html>

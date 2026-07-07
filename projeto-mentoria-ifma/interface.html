@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conecta IFMA - Mentoria</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+    <!-- Cabeçalho com menu -->
+    <div class="inicio">
+        <img src="ifma - Copia.png" alt="" class="logo-ifma">
+        <h1>Conecta IFMA</h1>
+        <p class="subtitulo">Plataforma de mentoria acadêmica</p>
+        <div class="menu-topo">
+            <!-- Botão para abrir o menu lateral -->
+            <button id="menuBtn" class="btn-menu">☰ Menu</button>
+        </div>
+    </div>
+
+    <!-- Conteúdo principal -->
+    <div class="interface">
+  <div class="apresentacao">
+    
+    <div class="texto">
+      <h2>Bem-vindo ao Conecta IFMA</h2>
+      <p>
+        O <strong>Conecta IFMA</strong> nasceu como uma iniciativa para aproximar estudantes e professores,
+        criando um espaço digital que valoriza a troca de experiências e o aprendizado coletivo.
+      </p>
+      <p>
+        Mais do que uma plataforma, é um ambiente de encontro e inspiração. Aqui, cada usuário
+        encontra apoio, orientação e oportunidades para crescer não apenas academicamente, mas também como pessoa.
+      </p>
+      <img src="img-if.webp" alt="Imagem de mentoria" class="banner">
+      <p>
+        A proposta é simples: oferecer um espaço acessível e inclusivo, onde o conhecimento circula de forma livre
+        e colaborativa. Professores compartilham suas trajetórias e aprendizados, enquanto estudantes descobrem
+        caminhos para superar desafios e alcançar seus objetivos.
+      </p>
+      <p>
+        O Conecta IFMA representa o futuro da educação digital no campus: uma rede de conexões que ultrapassa
+        os limites da sala de aula e fortalece os laços da nossa comunidade acadêmica.
+      </p>
+    </div>
+  </div>
+</div>
+
+
+    <!-- Sidebar oculto (caixinha menor) -->
+    <aside id="sidebar">
+        <button id="closeBtn" class="btn-close">✖</button>
+        <h3>Links rápidos</h3>
+        <a href="login.html" class="btn-login">Entrar</a>
+        <a href="cadastro.html" class="btn-cadastro">Cadastrar</a>
+    </aside>
+
+    <script src="js/interface.js" defer></script>
+    <script>
+        const menuBtn = document.getElementById('menuBtn');
+        const sidebar = document.getElementById('sidebar');
+        const closeBtn = document.getElementById('closeBtn');
+
+        menuBtn.addEventListener('click', () => {
+            sidebar.classList.add('active');
+        });
+
+        closeBtn.addEventListener('click', () => {
+            sidebar.classList.remove('active');
+        });
+
+    </script>
+</body>
+
+</html>

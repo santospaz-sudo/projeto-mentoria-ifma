@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cadastro</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+  <div class="container-login">
+    <h1>Cadastro de Usuários</h1>
+    <form id="cadastroForm">
+      <input type="text" id="nome" placeholder="Nome" required>
+      <input type="text" id="sobrenome" placeholder="Sobrenome" required>
+      <input type="date" id="data_nascimento" required>
+      <input type="email" id="email" placeholder="Email acadêmico" required>
+      <input type="password" id="senha" placeholder="Senha" required>
+      <select id="tipo">
+        <option value="mentor">Mentor</option>
+        <option value="mentorado">Mentorado</option>
+      </select>
+      <button type="submit">Cadastrar</button>
+    </form>
+  </div>
+
+  <script>
+    document.getElementById("cadastroForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const usuario = {
+        nome: document.getElementById("nome").value,
+        sobrenome: document.getElementById("sobrenome").value,
+        data_nascimento: document.getElementById("data_nascimento").value,
+        email: document.getElementById("email").value,
+        senha: document.getElementById("senha").value,
+        tipo: document.getElementById("tipo").value
+      };
+
+      try {
+        const response = await fetch("http://127.0.0.1:3000/cadastrar", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(usuario)
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+          alert(data.erro || 'Erro ao cadastrar usuário.');
+          return;
+        }
+
+        alert(data.mensagem || "Usuário cadastrado com sucesso!");
+        window.location.href = "login.html";
+        return;
+      } catch (error) {
+        console.warn('Cadastro remoto falhou, salvando localmente:', error);
+
+        // fallback local: salva usuário no localStorage para permitir cadastro sem backend
+        const usersKey = 'ifma_users';
+        const users = JSON.parse(localStorage.getItem(usersKey) || '[]');
+
+        // evita duplicação por email
+        if (users.find(u => u.email === usuario.email)) {
+          alert('Já existe um usuário com esse email salvo localmente. Faça login.');
+          window.location.href = 'login.html';
+          return;
+        }
+
+        // adiciona id simples e salva
+        usuario.id = Date.now();
+        users.push(usuario);
+        localStorage.setItem(usersKey, JSON.stringify(users));
+
+        alert('Servidor indisponível — cadastro salvo localmente. Agora você pode fazer login.');
+        window.location.href = 'login.html';
+        return;
+      }
+    });
+  </script>
+
+</body>
+
+</html>

@@ -9,6 +9,11 @@ CREATE DATABASE IF NOT EXISTS mentoria_ifma
 USE mentoria_ifma;
 
 -- Tabela de usuários (mentores e mentorados)
+-- Execute este script no phpMyAdmin (XAMPP) ou no console do MySQL
+
+CREATE DATABASE IF NOT EXISTS mentoria_ifma;
+USE mentoria_ifma;
+
 CREATE TABLE IF NOT EXISTS usuarios (
   id INT AUTO_INCREMENT PRIMARY KEY,
   nome VARCHAR(100) NOT NULL,
@@ -18,7 +23,7 @@ CREATE TABLE IF NOT EXISTS usuarios (
   senha VARCHAR(255) NOT NULL,
   tipo ENUM('mentor', 'mentorado') NOT NULL,
   criado_em TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB;
+);
 
 -- Tabela de áreas de mentoria (ex: Matemática, ADS, TPG, etc.)
 CREATE TABLE IF NOT EXISTS areas_mentoria (

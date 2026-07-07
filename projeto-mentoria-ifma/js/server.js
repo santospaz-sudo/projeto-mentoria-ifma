@@ -1,52 +1,56 @@
 const express = require('express');
-const bodyParser = require('body-parser');
-const bcrypt = require('bcrypt');
+const cors = require('cors');
 const conexao = require('./db');
 
 const app = express();
-const PORTA = 3000;
 
-app.use(bodyParser.json());
+app.use(cors()); // permite que o cadastro.html (aberto no navegador) acesse a API
+app.use(express.json()); // substitui o body-parser (já incluso no Express 5)
 
-// Libera acesso do front-end (login.html / cadastro.html) rodando em outra origem
-app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Methods', 'GET,POST');
-  res.header('Access-Control-Allow-Headers', 'Content-Type');
-  next();
-});
-
-// ---------- Rota de Cadastro ----------
-app.post('/cadastrar', async (req, res) => {
+// Rota de cadastro de usuário
+app.post('/cadastrar', (req, res) => {
   const { nome, sobrenome, data_nascimento, email, senha, tipo } = req.body;
 
+  // Validação básica
   if (!nome || !sobrenome || !data_nascimento || !email || !senha || !tipo) {
     return res.status(400).json({ erro: 'Preencha todos os campos.' });
   }
 
-  try {
-    const senhaHash = await bcrypt.hash(senha, 10);
+  // Verifica se o email já existe
+  const sqlVerifica = 'SELECT id FROM usuarios WHERE email = ?';
+  conexao.query(sqlVerifica, [email], (err, resultados) => {
+    if (err) {
+      console.error('Erro ao verificar email:', err);
+      return res.status(500).json({ erro: 'Erro interno ao verificar usuário.' });
+    }
 
-    const sql = `INSERT INTO usuarios (nome, sobrenome, data_nascimento, email, senha, tipo)
-                 VALUES (?, ?, ?, ?, ?, ?)`;
+    if (resultados.length > 0) {
+      return res.status(409).json({ erro: 'Já existe um usuário com esse email.' });
+    }
 
-    conexao.query(sql, [nome, sobrenome, data_nascimento, email, senhaHash, tipo], (err, resultado) => {
-      if (err) {
-        if (err.code === 'ER_DUP_ENTRY') {
-          return res.status(409).json({ erro: 'Este email já está cadastrado.' });
+    // Insere o novo usuário
+    const sqlInsere = `
+      INSERT INTO usuarios (nome, sobrenome, data_nascimento, email, senha, tipo)
+      VALUES (?, ?, ?, ?, ?, ?)
+    `;
+    conexao.query(
+      sqlInsere,
+      [nome, sobrenome, data_nascimento, email, senha, tipo],
+      (err, resultado) => {
+        if (err) {
+          console.error('Erro ao cadastrar usuário:', err);
+          return res.status(500).json({ erro: 'Erro ao cadastrar usuário.' });
         }
-        console.error(err);
-        return res.status(500).json({ erro: 'Erro ao cadastrar usuário.' });
+        return res.status(201).json({
+          mensagem: 'Usuário cadastrado com sucesso!',
+          id: resultado.insertId
+        });
       }
-      res.status(201).json({ mensagem: 'Usuário cadastrado com sucesso!', id: resultado.insertId });
-    });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ erro: 'Erro interno no servidor.' });
-  }
+    );
+  });
 });
 
-// ---------- Rota de Login ----------
+// Rota de login (usada por login.html / js/login.js)
 app.post('/login', (req, res) => {
   const { email, senha } = req.body;
 
@@ -54,48 +58,22 @@ app.post('/login', (req, res) => {
     return res.status(400).json({ erro: 'Informe email e senha.' });
   }
 
-  const sql = 'SELECT * FROM usuarios WHERE email = ?';
-  conexao.query(sql, [email], async (err, resultados) => {
+  const sql = 'SELECT id, nome, sobrenome, email, tipo FROM usuarios WHERE email = ? AND senha = ?';
+  conexao.query(sql, [email, senha], (err, resultados) => {
     if (err) {
-      console.error(err);
-      return res.status(500).json({ erro: 'Erro ao consultar usuário.' });
+      console.error('Erro ao fazer login:', err);
+      return res.status(500).json({ erro: 'Erro interno ao fazer login.' });
     }
 
     if (resultados.length === 0) {
       return res.status(401).json({ erro: 'Email ou senha inválidos.' });
     }
 
-    const usuario = resultados[0];
-    const senhaCorreta = await bcrypt.compare(senha, usuario.senha);
-
-    if (!senhaCorreta) {
-      return res.status(401).json({ erro: 'Email ou senha inválidos.' });
-    }
-
-    res.status(200).json({
-      mensagem: 'Login realizado com sucesso!',
-      usuario: {
-        id: usuario.id,
-        nome: usuario.nome,
-        sobrenome: usuario.sobrenome,
-        email: usuario.email,
-        tipo: usuario.tipo
-      }
-    });
+    return res.json({ mensagem: 'Login realizado com sucesso!', usuario: resultados[0] });
   });
 });
 
-// ---------- Rota para listar áreas de mentoria ----------
-app.get('/areas', (req, res) => {
-  conexao.query('SELECT * FROM areas_mentoria', (err, resultados) => {
-    if (err) {
-      console.error(err);
-      return res.status(500).json({ erro: 'Erro ao buscar áreas.' });
-    }
-    res.status(200).json(resultados);
-  });
-});
-
+const PORTA = 3000;
 app.listen(PORTA, () => {
-  console.log(`Servidor rodando em http://localhost:${PORTA}`);
+  console.log(`Servidor rodando em http://127.0.0.1:${PORTA}`);
 });

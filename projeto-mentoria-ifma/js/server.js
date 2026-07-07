@@ -1,8 +1,15 @@
 const express = require('express');
 const cors = require('cors');
-const conexao = require('./db');
+const conexao = require('../db');
 
 const app = express();
+
+function responderErroBanco(res, err, mensagem) {
+  console.error(mensagem, err);
+  return res.status(503).json({
+    erro: 'Não foi possível comunicar com o banco de dados. Verifique o MySQL/XAMPP e as credenciais.'
+  });
+}
 
 app.use(cors()); // permite que o cadastro.html (aberto no navegador) acesse a API
 app.use(express.json()); // substitui o body-parser (já incluso no Express 5)
@@ -20,8 +27,7 @@ app.post('/cadastrar', (req, res) => {
   const sqlVerifica = 'SELECT id FROM usuarios WHERE email = ?';
   conexao.query(sqlVerifica, [email], (err, resultados) => {
     if (err) {
-      console.error('Erro ao verificar email:', err);
-      return res.status(500).json({ erro: 'Erro interno ao verificar usuário.' });
+      return responderErroBanco(res, err, 'Erro ao verificar email:');
     }
 
     if (resultados.length > 0) {
@@ -38,8 +44,7 @@ app.post('/cadastrar', (req, res) => {
       [nome, sobrenome, data_nascimento, email, senha, tipo],
       (err, resultado) => {
         if (err) {
-          console.error('Erro ao cadastrar usuário:', err);
-          return res.status(500).json({ erro: 'Erro ao cadastrar usuário.' });
+          return responderErroBanco(res, err, 'Erro ao cadastrar usuário:');
         }
         return res.status(201).json({
           mensagem: 'Usuário cadastrado com sucesso!',
@@ -61,8 +66,7 @@ app.post('/login', (req, res) => {
   const sql = 'SELECT id, nome, sobrenome, email, tipo FROM usuarios WHERE email = ? AND senha = ?';
   conexao.query(sql, [email, senha], (err, resultados) => {
     if (err) {
-      console.error('Erro ao fazer login:', err);
-      return res.status(500).json({ erro: 'Erro interno ao fazer login.' });
+      return responderErroBanco(res, err, 'Erro ao fazer login:');
     }
 
     if (resultados.length === 0) {
